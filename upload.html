@@ -5,12 +5,47 @@
   <title>PDF 단어장 만들기</title>
 </head>
 <body>
-  <h1>📄 PDF 단어장 업로드</h1>
+  <h1>📄 PDF 단어장 만들기</h1>
 
-  <input type="file" accept="application/pdf">
-  <p>※ PDF에서 단어 추출 기능은 다음 단계에서 추가할 예정</p>
+  <input type="file" id="pdfFile" accept="application/pdf">
+  <button onclick="readPDF()">PDF 읽기</button>
 
-  <br><br>
-  <a href="index.html">⬅ 돌아가기</a>
+  <pre id="output"></pre>
+
+  <!-- pdf.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
+  <script>
+    async function readPDF() {
+      const file = document.getElementById("pdfFile").files[0];
+      if (!file) {
+        alert("PDF를 선택하세요");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = async function () {
+        const typedarray = new Uint8Array(this.result);
+
+        const pdf = await pdfjsLib.getDocument(typedarray).promise;
+        let text = "";
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          content.items.forEach(item => {
+            text += item.str + "\n";
+          });
+        }
+
+        document.getElementById("output").textContent = text;
+
+        // localStorage에 저장
+        localStorage.setItem("pdfWords", text);
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+  </script>
 </body>
 </html>
