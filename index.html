@@ -1,23 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <title>영단어 연습</title>
+  <meta charset="UTF-8">
+  <title>영단어 학습</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>📘 영단어 프로그램</h1>
 
-  <p id="word">apple</p>
-  <button onclick="changeWord()">다음 단어</button>
+<h1>📘 영단어 학습</h1>
 
-  <script>
-    const words = ["apple", "book", "computer", "dream", "energy"];
-    let i = 0;
+<select id="unitSelect" onchange="loadUnit()">
+  <option value="">유닛 선택</option>
+  <option value="1">Unit 1</option>
+  <option value="2">Unit 2</option>
+</select>
 
-    function changeWord() {
-      i = (i + 1) % words.length;
-      document.getElementById("word").innerText = words[i];
-    }
-  </script>
+<div id="card">
+  <h2 id="en">단어</h2>
+  <p id="ko" style="display:none;">뜻</p>
+</div>
+
+<button onclick="toggleMeaning()">뜻 보기 / 가리기</button>
+<button onclick="nextWord()">다음 단어</button>
+
+<br><br>
+<a href="upload.html">📄 PDF 단어장 만들기</a>
+
+<script src="app.js"></script>
 </body>
 </html>
