@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>영단어 연습</title>
+</head>
+<body>
+  <h1>📘 영단어 프로그램</h1>
+
+  <p id="word">apple</p>
+  <button onclick="changeWord()">다음 단어</button>
+
+  <script>
+    const words = ["apple", "book", "computer", "dream", "energy"];
+    let i = 0;
+
+    function changeWord() {
+      i = (i + 1) % words.length;
+      document.getElementById("word").innerText = words[i];
+    }
+  </script>
+</body>
+</html>
